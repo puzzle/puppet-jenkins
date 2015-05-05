@@ -25,8 +25,10 @@ define jenkins::job::present(
   }
 
   $jenkins_cli        = $jenkins::cli::cmd
-  $tmp_config_path    = "/tmp/${jobname}-config.xml"
-  $job_dir            = "/var/lib/jenkins/jobs/${jobname}"
+  $tmp_jobname        = regsubst($jobname, '/', '_', 'G')
+  $tmp_dirname        = regsubst($jobname, '/', '/jobs/', 'G')
+  $tmp_config_path    = "/tmp/${tmp_jobname}-config.xml"
+  $job_dir            = "/var/lib/jenkins/jobs/${tmp_dirname}"
   $config_path        = "${job_dir}/config.xml"
 
   Exec {
